@@ -1,37 +1,24 @@
 from bleak import BleakScanner
-mydevice = None
 
-class My_Discovery():
-
-    async def discover_devices(self):
-        devices = await BleakScanner.discover()
-        for d in devices:
-            if d.name == "BLE_device_01":
-                mydevice = d
-                print("mydevice Info from discover file sending....")
-                return mydevice
-
-    
+async def discover_devices(name):
+    devices = await BleakScanner.discover()
+    print("Scanning for available BLE devices....")
+    mydevice = None
+    for d in devices:
+        if d.name == name:
+            mydevice = d
+            print(dir(mydevice))
+            break
+    return mydevice
 
 
 
 """
 
-import asyncio
-from bleak import BleakScanner, BleakClient
-
-async def discover_devices():
-    devices = await BleakScanner.discover()
-    mydevice = None
-    for d in devices:
-        if d.name == "BLE_device_01":
-            mydevice = d
-            break
-    return mydevice
-
 async def connect_to_device(client):
     await asyncio.sleep(2)
     if client.is_connected:
+
         print("Connected to device.")
     else:
         print("Not connected to device.")
